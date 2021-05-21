@@ -25,6 +25,10 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+
+    implementation("com.graphql-java:graphql-spring-boot-starter:${Versions.springGraphQL}")
+    implementation("com.graphql-java:graphql-java-tools:${Versions.graphQL}")
+
     implementation("org.springframework.cloud:spring-cloud-starter-sleuth")
     implementation("org.springframework.cloud:spring-cloud-sleuth-zipkin")
 //    runtimeOnly("mysql:mysql-connector-java")
