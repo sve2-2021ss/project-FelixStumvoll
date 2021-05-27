@@ -3,6 +3,7 @@ package com.gamelib.search.core.services.search.impl
 import com.gamelib.search.SearchConfig
 import com.gamelib.search.core.services.search.SearchService
 import com.gamelib.search.core.services.search.entities.SearchResult
+import com.gamelib.search.util.suppressError
 import io.github.resilience4j.circuitbreaker.CircuitBreaker
 import io.github.resilience4j.kotlin.circuitbreaker.CircuitBreakerConfig
 import io.github.resilience4j.kotlin.circuitbreaker.circuitBreaker
@@ -53,6 +54,6 @@ class SearchServiceImpl(private val config: SearchConfig) : SearchService {
             .bodyToFlow<SearchResult>()
             .retry(retry)
             .circuitBreaker(circuitBreaker)
-//            .suppressError()
+            .suppressError()
     }
 }
