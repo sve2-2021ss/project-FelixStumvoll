@@ -1,4 +1,4 @@
-package com.gamelib.search.core.services
+package com.gamelib.search.core.services.search
 
 import kotlinx.coroutines.flow.Flow
 
