@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: zipkin-config
 data:
-  zipkin-url: zipkin-service
+  zipkin-service: zipkin-service

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: search-config
+data:
+  user-service: user-service
+  game-service: game-service
