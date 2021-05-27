@@ -20,6 +20,6 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          file: ./search/Dockerfile
+          context: ./search
           push: true
           tags: felixstumvoll/gamelib-search:latest
