@@ -5,6 +5,7 @@ plugins {
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     kotlin("jvm") version "1.5.10"
     kotlin("plugin.spring") version "1.5.10"
+    kotlin("plugin.noarg") version "1.5.10"
 }
 
 group = "com.gamelib"
@@ -15,6 +16,10 @@ repositories {
     mavenCentral()
     maven { url = uri("https://repo.spring.io/snapshot") }
     maven { url = uri("https://repo.spring.io/milestone") }
+}
+
+noArg {
+    annotation("com.gamelib.search.util.NoArgs")
 }
 
 extra["springCloudVersion"] = "2020.0.3-SNAPSHOT"
@@ -34,10 +39,8 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-sleuth")
     implementation("org.springframework.cloud:spring-cloud-sleuth-zipkin")
     //resilience
-    implementation("org.springframework.cloud:spring-cloud-starter-circuitbreaker-reactor-resilience4j")
-    implementation("io.github.resilience4j:resilience4j-reactor")
+    implementation("io.github.resilience4j:resilience4j-retry")
     implementation("io.github.resilience4j:resilience4j-circuitbreaker")
-    implementation("io.github.resilience4j:resilience4j-spring-boot2")
     //dev
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     //web
