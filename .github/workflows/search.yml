@@ -21,6 +21,5 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           file: ./search/Dockerfile
-          platforms: linux/amd64
           push: true
           tags: felixstumvoll/gamelib-search:latest
