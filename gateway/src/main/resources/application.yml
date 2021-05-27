@@ -1,0 +1,41 @@
+server.port: 9999
+spring:
+  application.name: gateway
+  zipkin.base-url: http://localhost:9411
+  cloud:
+    gateway:
+      routes:
+        - id: users
+          uri: http://localhost:8021
+          predicates:
+            - Path=/users/**
+          filters:
+            - RewritePath=/users/(?<path>.*), /$\{path}
+            - CircuitBreaker=users
+        - id: search
+            uri: http://localhost:8022
+            predicates:
+              - Path=/search/**
+            filters:
+              - RewritePath=/search/(?<path>.*), /$\{path}
+              - CircuitBreaker=search
+#        - id: shortener
+#          uri: http://localhost:8080
+#          predicates:
+#            - Path=/users/**
+#          filters:
+#            - RewritePath=/shortener/(?<path>.*), /$\{path}
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      slidingWindowSize: 10
+      minimumNumberOfCalls: 5
+      permittedNumberOfCallsInHalfOpenState: 3
+      automaticTransitionFromOpenToHalfOpenEnabled: true
+      waitDurationInOpenState: 5s
+      failureRateThreshold: 50
+  instances:
+    users:
+      baseConfig: default
+    search:
+      baseConfig: default
