@@ -22,4 +22,4 @@ jobs:
         with:
           context: ./gateway
           push: true
-          tags: felixstumvoll/gamelib-search:latest
+          tags: felixstumvoll/gamelib-gateway:latest
