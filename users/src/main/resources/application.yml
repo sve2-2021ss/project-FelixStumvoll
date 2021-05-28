@@ -2,9 +2,7 @@ server:
   port: 8021
 spring:
   application.name: users
-  profiles:
-    active: dev
+  profiles.active: dev
   jpa:
     hibernate:
       ddl-auto: update
-  zipkin.base-url: http://localhost:9411
