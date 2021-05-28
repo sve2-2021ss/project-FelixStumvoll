@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class SearchController(private val userService: UserService) {
     @GetMapping("/search")
-    fun findAllByName(@RequestParam term: String): List<User> =
-        listOf(User(1, "Felix", "felix.stumvoll@gmail.com")) //userService.findAllByName(term)
+    fun findAllByName(@RequestParam term: String): SearchResult =
+        SearchResult(listOf(User(1, "Felix", "felix.stumvoll@gmail.com")))//userService.findAllByName(term)
+}
+
+class SearchResult(val results: List<User>) {
+    val type = "Users"
 }

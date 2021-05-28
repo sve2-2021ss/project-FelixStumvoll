@@ -6,9 +6,13 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class TestController {
     @GetMapping("/search")
-    fun get(): List<String> {
-        print("poggers")
-        throw RuntimeException()
-        return listOf("pog", "champ")
+    fun get(): SearchResult {
+//        print("poggers")
+//        throw RuntimeException()
+        return SearchResult(listOf("pog", "champ"))
     }
+}
+
+class SearchResult(val results: List<Any>) {
+    val type = "Games"
 }
