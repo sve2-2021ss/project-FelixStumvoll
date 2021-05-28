@@ -7,5 +7,9 @@ import org.springframework.stereotype.Service
 
 @Service
 class UserServiceImpl(private val userRepository: UserRepository) : UserService {
-    override fun findAllByName(name: String): List<User> = userRepository.findAllByName(name)
+    override fun getAllByName(name: String): List<User> =
+        userRepository.getAllByNameContaining(name)
+
+    override fun getFriendsOfUser(id: Long): List<User> =
+        userRepository.getFriendsOfUser(id)
 }

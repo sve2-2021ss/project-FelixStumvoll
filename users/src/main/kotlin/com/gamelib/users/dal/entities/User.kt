@@ -1,14 +1,14 @@
 package com.gamelib.users.dal.entities
 
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
+import javax.persistence.*
 
 @Entity
 data class User(
+    var name: String,
+    var email: String,
+    @ManyToMany(fetch = FetchType.LAZY)
+    var friends: MutableList<User>,
     @Id
     @GeneratedValue
-    var id: Long? = null,
-    var name: String,
-    var email: String
+    var id: Long? = null
 )
