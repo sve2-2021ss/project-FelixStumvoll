@@ -1,0 +1,19 @@
+spring:
+  zipkin.base-url: http://localhost:9411
+  cloud:
+    gateway:
+      routes:
+        - id: users
+          uri: http://localhost:8021
+          predicates:
+            - Path=/users/**
+          filters:
+            - RewritePath=/users/(?<path>.*), /$\{path}
+            - CircuitBreaker=users
+        - id: search
+            uri: http://localhost:8022
+            predicates:
+              - Path=/search/**
+            filters:
+              - RewritePath=/search/(?<path>.*), /$\{path}
+              - CircuitBreaker=search

@@ -1,0 +1,26 @@
+spring:
+  zipkin.base-url: ${ZIPKIN_SERVICE}
+  cloud:
+    gateway:
+      routes:
+        - id: users
+          uri: ${USER_SERVICE}
+          predicates:
+            - Path=/users/**
+          filters:
+            - RewritePath=/users/(?<path>.*), /$\{path}
+            - CircuitBreaker=users
+        - id: games
+            uri: ${GAMES_SERVICE}
+            predicates:
+              - Path=/games/**
+            filters:
+              - RewritePath=/games/(?<path>.*), /$\{path}
+              - CircuitBreaker=games
+        - id: search
+            uri: ${SEARCH_SERVICE}
+            predicates:
+              - Path=/search/**
+            filters:
+              - RewritePath=/search/(?<path>.*), /$\{path}
+              - CircuitBreaker=search
