@@ -23,5 +23,4 @@ spring:
           predicates:
             - Path=/search
           filters:
-            - RewritePath=/search,
             - CircuitBreaker=search
