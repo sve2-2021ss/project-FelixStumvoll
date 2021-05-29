@@ -8,7 +8,7 @@ spring:
           predicates:
             - Path=/users/**
           filters:
-            - RewritePath=/users/(?<path>.*), /$\{path}
+            - RewritePath=/users(?<path>/?.*), $\{path}
             - CircuitBreaker=users
 #        - id: games
 #          uri: ${GAMES_SERVICE}
@@ -22,5 +22,5 @@ spring:
           predicates:
             - Path=/search/**
           filters:
-            - RewritePath=/search/(?<path>.*), /$\{path}
+            - RewritePath=/search(?<path>/?.*), $\{path}
             - CircuitBreaker=search
