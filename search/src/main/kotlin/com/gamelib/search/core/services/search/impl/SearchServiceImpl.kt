@@ -34,12 +34,14 @@ class SearchServiceImpl(private val config: SearchConfig) : SearchService {
                 slidingWindowSize(10)
                 minimumNumberOfCalls(5)
                 permittedNumberOfCallsInHalfOpenState(3)
+                waitDurationInOpenState(Duration.ofSeconds(20))
                 failureRateThreshold(50f)
-                waitDurationInOpenState(Duration.ofSeconds(5))
+                slowCallDurationThreshold(Duration.ofMillis(500))
+                slowCallRateThreshold(50f)
                 automaticTransitionFromOpenToHalfOpenEnabled(true)
             }),
             TimeLimiter.of(TimeLimiterConfig {
-                timeoutDuration(Duration.ofSeconds(2))
+                timeoutDuration(Duration.ofSeconds(1))
             })
         )
     }
