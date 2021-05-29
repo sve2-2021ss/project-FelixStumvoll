@@ -29,12 +29,12 @@ spec:
             - name: MYSQL_USER
               valueFrom:
                 secretKeyRef:
-                  name: users-secret
+                  name: users-db-secret
                   key: db-user
             - name: MYSQL_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: users-secret
+                  name: users-db-secret
                   key: db-password
           volumeMounts:
             - name: data
