@@ -4,7 +4,7 @@ spring:
     gateway:
       routes:
         - id: users
-          uri: ${USER_SERVICE}
+          uri: ${USERS_SERVICE}
           predicates:
             - Path=/users/**
           filters:
