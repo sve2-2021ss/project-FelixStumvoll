@@ -52,8 +52,8 @@ class SearchServiceImpl(private val config: SearchConfig) : SearchService {
             .uri(URI("$url/${config.searchPostfix}?term=$term"))
             .retrieve()
             .bodyToFlow<SearchResult>()
-            .retry(retry)
             .circuitBreaker(circuitBreaker)
+            .retry(retry)
             .suppressError()
     }
 }

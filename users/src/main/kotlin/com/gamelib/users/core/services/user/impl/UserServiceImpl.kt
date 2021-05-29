@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class UserServiceImpl(private val userRepository: UserRepository) : UserService {
+    override fun getById(id: Long): User? = userRepository.findById(id).orElse(null)
+
     override fun getAllByName(name: String): List<User> =
         userRepository.getAllByNameContaining(name)
 
