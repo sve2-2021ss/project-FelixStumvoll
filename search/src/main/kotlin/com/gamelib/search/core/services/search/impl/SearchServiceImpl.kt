@@ -8,7 +8,10 @@ import io.github.resilience4j.kotlin.circuitbreaker.CircuitBreakerConfig
 import io.github.resilience4j.kotlin.circuitbreaker.circuitBreaker
 import io.github.resilience4j.kotlin.retry.RetryConfig
 import io.github.resilience4j.kotlin.retry.retry
+import io.github.resilience4j.kotlin.timelimiter.TimeLimiterConfig
+import io.github.resilience4j.kotlin.timelimiter.timeLimiter
 import io.github.resilience4j.retry.Retry
+import io.github.resilience4j.timelimiter.TimeLimiter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -23,7 +26,7 @@ import java.time.Duration
 class SearchServiceImpl(private val config: SearchConfig) : SearchService {
     val webClient: WebClient = WebClient.create()
     val resilienceMap = config.searchableApis.associateWith {
-        Pair(
+        Triple(
             Retry.of("search-$it", RetryConfig {
                 maxAttempts(3)
             }),
@@ -34,6 +37,9 @@ class SearchServiceImpl(private val config: SearchConfig) : SearchService {
                 failureRateThreshold(50f)
                 waitDurationInOpenState(Duration.ofSeconds(5))
                 automaticTransitionFromOpenToHalfOpenEnabled(true)
+            }),
+            TimeLimiter.of(TimeLimiterConfig {
+                timeoutDuration(Duration.ofSeconds(2))
             })
         )
     }
@@ -45,13 +51,14 @@ class SearchServiceImpl(private val config: SearchConfig) : SearchService {
         .merge()
 
     override fun makeRequest(url: String, term: String): Flow<SearchResult> {
-        val (retry, circuitBreaker) = resilienceMap[url]!!
+        val (retry, circuitBreaker, timeLimiter) = resilienceMap[url]!!
 
         return webClient
             .get()
             .uri(URI("$url/${config.searchPostfix}?term=$term"))
             .retrieve()
             .bodyToFlow<SearchResult>()
+            .timeLimiter(timeLimiter)
             .circuitBreaker(circuitBreaker)
             .retry(retry)
             .catch {

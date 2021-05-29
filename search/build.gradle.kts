@@ -30,7 +30,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
     implementation("io.github.resilience4j:resilience4j-kotlin")
     //configuration
     implementation("org.springframework.boot:spring-boot-configuration-processor")
@@ -41,6 +41,7 @@ dependencies {
     //resilience
     implementation("io.github.resilience4j:resilience4j-retry")
     implementation("io.github.resilience4j:resilience4j-circuitbreaker")
+    implementation("io.github.resilience4j:resilience4j-timelimiter")
     //dev
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     //web
