@@ -1,7 +1,7 @@
 package com.gamelib.users.core.services.search
 
-import com.gamelib.users.core.entities.SearchResult
+import com.gamelib.users.core.dtos.SearchResultDto
 
 interface SearchService {
-    fun searchUsers(name: String): SearchResult
+    fun searchUsers(term: String): SearchResultDto
 }

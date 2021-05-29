@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:h2:file:./data/shorturl
+    url: jdbc:h2:file:./data/users
     username: sa
     password: root
     driverClassName: org.h2.Driver

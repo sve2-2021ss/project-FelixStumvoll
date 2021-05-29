@@ -1,9 +1,10 @@
 package com.gamelib.users.core.services.user
 
-import com.gamelib.users.dal.entities.User
+import com.gamelib.users.core.dtos.UserDto
 
 interface UserService {
-    fun getById(id: Long): User?
-    fun getAllByName(name: String): List<User>
-    fun getFriendsOfUser(id: Long): List<User>
+    fun getById(id: Long): UserDto?
+    fun getAll(): List<UserDto>
+    fun getAllByName(name: String): List<UserDto>
+    fun getFriendsOfUser(id: Long): List<UserDto>
 }
