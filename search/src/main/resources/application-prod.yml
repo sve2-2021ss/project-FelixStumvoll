@@ -2,5 +2,5 @@ spring:
   zipkin.base-url: ${ZIPKIN_SERVICE}
 search:
   searchableApis:
-    - ${USER_SERVICE}
-    - ${GAME_SERVICE}
+    - ${USERS_SERVICE}
+    - ${GAMES_SERVICE}
