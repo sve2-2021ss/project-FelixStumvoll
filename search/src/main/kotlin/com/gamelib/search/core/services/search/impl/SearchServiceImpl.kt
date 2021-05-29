@@ -3,6 +3,7 @@ package com.gamelib.search.core.services.search.impl
 import com.gamelib.search.SearchConfig
 import com.gamelib.search.core.services.search.SearchService
 import com.gamelib.search.core.services.search.entities.SearchResult
+import com.gamelib.search.util.suppressError
 import io.github.resilience4j.circuitbreaker.CircuitBreaker
 import io.github.resilience4j.kotlin.circuitbreaker.CircuitBreakerConfig
 import io.github.resilience4j.kotlin.circuitbreaker.circuitBreaker
@@ -14,7 +15,6 @@ import io.github.resilience4j.retry.Retry
 import io.github.resilience4j.timelimiter.TimeLimiter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.merge
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
@@ -41,7 +41,7 @@ class SearchServiceImpl(private val config: SearchConfig) : SearchService {
                 automaticTransitionFromOpenToHalfOpenEnabled(true)
             }),
             TimeLimiter.of(TimeLimiterConfig {
-                timeoutDuration(Duration.ofSeconds(1))
+                timeoutDuration(Duration.ofMillis(400))
             })
         )
     }
@@ -63,8 +63,6 @@ class SearchServiceImpl(private val config: SearchConfig) : SearchService {
             .timeLimiter(timeLimiter)
             .circuitBreaker(circuitBreaker)
             .retry(retry)
-            .catch {
-                println(it)
-            }
+            .suppressError()
     }
 }
