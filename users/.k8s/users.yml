@@ -12,40 +12,40 @@ spec:
         app: users-service
     spec:
       containers:
-      - name: users-service
-        image: felixstumvoll/gamelib-users
-        env:
-          - name: DB_NAME
-            valueFrom:
-              configMapKeyRef:
-                name: users-db-config
-                key: db-name
-          - name: DB_URL
-            valueFrom:
-              configMapKeyRef:
-                name: users-config
-                key: db-url
-          - name: DB_USER
-            valueFrom:
-              secretKeyRef:
-                name: users-db-secret
-                key: db-user
-          - name: DB_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: users-db-secret
-                key: db-password
-          - name: ZIPKIN_SERVICE
-            valueFrom:
-              configMapKeyRef:
-                name: zipkin-config
-                key: zipkin-service
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
-        ports:
-        - containerPort: 8021
+        - name: users-service
+          image: felixstumvoll/gamelib-users
+          env:
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: users-db-config
+                  key: db-name
+            - name: DB_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: users-config
+                  key: db-url
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: users-db-secret
+                  key: db-user
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: users-db-secret
+                  key: db-password
+            - name: ZIPKIN_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: zipkin-config
+                  key: zipkin-service
+          resources:
+            limits:
+              memory: "500Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 8021
 ---
 apiVersion: v1
 kind: Service
@@ -55,5 +55,5 @@ spec:
   selector:
     app: users-service
   ports:
-  - port: 8021
-    targetPort: 8021
+    - port: 8021
+      targetPort: 8021
