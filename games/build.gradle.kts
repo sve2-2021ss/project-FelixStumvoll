@@ -5,6 +5,7 @@ plugins {
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     kotlin("jvm") version "1.5.10"
     kotlin("plugin.spring") version "1.5.10"
+    kotlin("plugin.jpa") version "1.5.10"
 }
 
 group = "com.gamelib"
@@ -40,6 +41,11 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     //dev
     developmentOnly("org.springframework.boot:spring-boot-devtools")
+    //db
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+    runtimeOnly("com.h2database:h2")
+    runtimeOnly("mysql:mysql-connector-java")
     //test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
