@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: gateway-config
 data:
-  users-service: users-service
-  games-service: games-service
-  search-service: search-service
+  users-service: http://users-service:8021
+  games-service: http://games-service:8022
+  search-service: http://search-service:8100
