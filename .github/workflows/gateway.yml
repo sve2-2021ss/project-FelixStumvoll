@@ -1,10 +1,10 @@
-name: Build and Deploy
+name: Build Gateway
 
 on:
   push:
     branches:
       - main
-    paths: 
+    paths:
       - gateway/**
 
 jobs:
