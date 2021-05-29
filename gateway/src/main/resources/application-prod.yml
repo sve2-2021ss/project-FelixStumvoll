@@ -10,13 +10,13 @@ spring:
           filters:
             - RewritePath=/users/(?<path>.*), /$\{path}
             - CircuitBreaker=users
-        - id: games
-          uri: ${GAMES_SERVICE}
-          predicates:
-            - Path=/games/**
-          filters:
-            - RewritePath=/games/(?<path>.*), /$\{path}
-            - CircuitBreaker=games
+#        - id: games
+#          uri: ${GAMES_SERVICE}
+#          predicates:
+#            - Path=/games/**
+#          filters:
+#            - RewritePath=/games/(?<path>.*), /$\{path}
+#            - CircuitBreaker=games
         - id: search
           uri: ${SEARCH_SERVICE}
           predicates:
