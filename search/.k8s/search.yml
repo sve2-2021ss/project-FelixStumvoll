@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   name: search-service
 spec:
-  replicas: 2
   selector:
     matchLabels:
       app: search-service
@@ -16,16 +15,16 @@ spec:
         - name: search-service
           image: felixstumvoll/gamelib-search
           env:
-            - name: USER_SERVICE
+            - name: USERS_SERVICE
               valueFrom:
                 configMapKeyRef:
                   name: search-config
-                  key: user-service
-            - name: GAME_SERVICE
+                  key: users-service
+            - name: GAMES_SERVICE
               valueFrom:
                 configMapKeyRef:
                   name: search-config
-                  key: game-service
+                  key: games-service
             - name: ZIPKIN_SERVICE
               valueFrom:
                 configMapKeyRef:

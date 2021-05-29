@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: search-config
 data:
-  user-service: user-service
-  game-service: game-service
+  users-service: http://users-service:8021
+  games-service: http://games-service:8022
