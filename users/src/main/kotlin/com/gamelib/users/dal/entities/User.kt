@@ -9,6 +9,6 @@ data class User(
     @ManyToMany(fetch = FetchType.LAZY)
     var friends: MutableList<User>,
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     var id: Long? = null
 )
