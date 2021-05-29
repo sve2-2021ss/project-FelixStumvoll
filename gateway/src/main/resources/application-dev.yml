@@ -1,3 +1,4 @@
+server.port: 9991
 spring:
   zipkin.base-url: http://localhost:9411
   cloud:
@@ -11,9 +12,8 @@ spring:
             - RewritePath=/users/(?<path>.*), /$\{path}
             - CircuitBreaker=users
         - id: search
-            uri: http://localhost:8022
-            predicates:
-              - Path=/search/**
-            filters:
-              - RewritePath=/search/(?<path>.*), /$\{path}
-              - CircuitBreaker=search
+          uri: http://localhost:8100
+          predicates:
+            - Path=/search
+          filters:
+            - CircuitBreaker=search
