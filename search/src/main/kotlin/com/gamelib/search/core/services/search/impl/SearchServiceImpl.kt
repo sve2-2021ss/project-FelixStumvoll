@@ -23,8 +23,7 @@ import java.net.URI
 import java.time.Duration
 
 @Service
-class SearchServiceImpl(private val config: SearchConfig) : SearchService {
-    val webClient: WebClient = WebClient.create()
+class SearchServiceImpl(private val config: SearchConfig, private val webClient: WebClient) : SearchService {
     val resilienceMap = config.searchableApis.associateWith {
         Triple(
             Retry.of("search-$it", RetryConfig {
