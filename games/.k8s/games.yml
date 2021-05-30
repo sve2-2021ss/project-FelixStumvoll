@@ -45,7 +45,7 @@ spec:
               memory: "500Mi"
               cpu: "500m"
           ports:
-            - containerPort: 8021
+            - containerPort: 8022
 ---
 apiVersion: v1
 kind: Service
@@ -54,6 +54,7 @@ metadata:
 spec:
   selector:
     app: games-service
+  type: LoadBalancer
   ports:
-    - port: 8021
-      targetPort: 8021
+    - port: 8022
+      targetPort: 8022

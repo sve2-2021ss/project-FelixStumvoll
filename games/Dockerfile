@@ -7,5 +7,5 @@ RUN gradle :bootJar
 
 FROM openjdk:16-slim
 COPY --from=build-step ./app/build/libs/*.jar app.jar
-EXPOSE 8100
+EXPOSE 8022
 ENTRYPOINT ["java", "-jar", "/app.jar"]

@@ -25,6 +25,11 @@ spec:
                 configMapKeyRef:
                   name: gateway-config
                   key: users-service
+            - name: GAMES_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: gateway-config
+                  key: games-service
             - name: SEARCH_SERVICE
               valueFrom:
                 configMapKeyRef:
