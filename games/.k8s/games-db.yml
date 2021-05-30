@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: games-db
+spec:
+  selector:
+    matchLabels:
+      app: games-db
+  serviceName: games-db
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: games-db
+    spec:
+      containers:
+        - name: games-db
+          image: mysql
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: root
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: games-db-config
+                  key: db-name
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: games-db-secret
+                  key: db-user
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: games-db-secret
+                  key: db-password
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: games-db
+spec:
+  selector:
+    app: games-db
+  ports:
+    - port: 3306
+      targetPort: 3306
