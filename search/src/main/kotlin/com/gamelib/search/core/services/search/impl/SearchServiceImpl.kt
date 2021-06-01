@@ -65,7 +65,7 @@ class SearchServiceImpl(private val config: SearchConfig, private val webClient:
             .retry(retry)
             .mapAll { SearchResult(name, it) }
             .catch {
-                logger.error("Error fetching results from $name --> $url", it)
+                logger.error("Error fetching results from $name @ $url", it)
             }
     }
 
