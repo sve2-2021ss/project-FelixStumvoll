@@ -4,7 +4,6 @@ import com.gamelib.search.SearchConfig
 import com.gamelib.search.core.services.search.SearchService
 import com.gamelib.search.core.services.search.entities.SearchResult
 import com.gamelib.search.util.mapAll
-import com.gamelib.search.util.suppressError
 import io.github.resilience4j.circuitbreaker.CircuitBreaker
 import io.github.resilience4j.kotlin.circuitbreaker.CircuitBreakerConfig
 import io.github.resilience4j.kotlin.circuitbreaker.circuitBreaker
@@ -16,7 +15,9 @@ import io.github.resilience4j.retry.Retry
 import io.github.resilience4j.timelimiter.TimeLimiter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.merge
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.bodyToFlow
@@ -63,6 +64,12 @@ class SearchServiceImpl(private val config: SearchConfig, private val webClient:
             .circuitBreaker(circuitBreaker)
             .retry(retry)
             .mapAll { SearchResult(name, it) }
-            .suppressError()
+            .catch {
+                logger.error("Error fetching results from $name --> $url", it)
+            }
+    }
+
+    companion object {
+        private val logger = LoggerFactory.getLogger(SearchServiceImpl::class.java)
     }
 }
