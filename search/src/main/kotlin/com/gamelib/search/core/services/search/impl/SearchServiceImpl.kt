@@ -3,6 +3,7 @@ package com.gamelib.search.core.services.search.impl
 import com.gamelib.search.SearchConfig
 import com.gamelib.search.core.services.search.SearchService
 import com.gamelib.search.core.services.search.entities.SearchResult
+import com.gamelib.search.util.mapAll
 import com.gamelib.search.util.suppressError
 import io.github.resilience4j.circuitbreaker.CircuitBreaker
 import io.github.resilience4j.kotlin.circuitbreaker.CircuitBreakerConfig
@@ -24,7 +25,7 @@ import java.time.Duration
 
 @Service
 class SearchServiceImpl(private val config: SearchConfig, private val webClient: WebClient) : SearchService {
-    val resilienceMap = config.searchableApis.associateWith {
+    val resilienceMap = config.searchableApis.map { it.name }.associateWith {
         Triple(
             Retry.of("search-$it", RetryConfig {
                 maxAttempts(3)
@@ -48,20 +49,21 @@ class SearchServiceImpl(private val config: SearchConfig, private val webClient:
 
     @ExperimentalCoroutinesApi
     override fun search(term: String): Flow<SearchResult> = config.searchableApis
-        .map { makeRequest(it, term) }
+        .map { (name, url) -> makeRequest(name, url, term) }
         .merge()
 
-    override fun makeRequest(url: String, term: String): Flow<SearchResult> {
-        val (retry, circuitBreaker, timeLimiter) = resilienceMap[url]!!
+    private fun makeRequest(name: String, url: String, term: String): Flow<SearchResult> {
+        val (retry, circuitBreaker, timeLimiter) = resilienceMap[name]!!
 
         return webClient
             .get()
             .uri(URI("$url/${config.searchPostfix}?term=$term"))
             .retrieve()
-            .bodyToFlow<SearchResult>()
+            .bodyToFlow<Any>()
             .timeLimiter(timeLimiter)
             .circuitBreaker(circuitBreaker)
             .retry(retry)
+            .mapAll { SearchResult(name, it) }
             .suppressError()
     }
 }

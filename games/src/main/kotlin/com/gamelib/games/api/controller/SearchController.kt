@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class SearchController(private val searchService: SearchService) {
     @GetMapping("/search")
-    fun findAllByName(@RequestParam(required = true) term: String) = searchService.searchGames(term)
+    fun search(@RequestParam(required = true) term: String) = searchService.searchGames(term)
 }

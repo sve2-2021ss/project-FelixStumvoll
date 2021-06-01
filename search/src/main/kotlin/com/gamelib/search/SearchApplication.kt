@@ -21,4 +21,6 @@ fun main(args: Array<String>) {
 
 @ConstructorBinding
 @ConfigurationProperties("search")
-data class SearchConfig(val searchableApis: List<String>, val searchPostfix: String)
+data class SearchConfig(val searchableApis: List<SearchableApiConfig>, val searchPostfix: String)
+
+data class SearchableApiConfig(val name: String, val url: String)
