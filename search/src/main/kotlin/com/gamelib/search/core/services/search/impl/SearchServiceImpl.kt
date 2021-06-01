@@ -20,7 +20,6 @@ import kotlinx.coroutines.flow.merge
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.bodyToFlow
-import java.net.URI
 import java.time.Duration
 
 @Service
@@ -57,7 +56,7 @@ class SearchServiceImpl(private val config: SearchConfig, private val webClient:
 
         return webClient
             .get()
-            .uri(URI("$url/${config.searchPostfix}?term=$term"))
+            .uri("$url/${config.searchPostfix}?term=$term")
             .retrieve()
             .bodyToFlow<Any>()
             .timeLimiter(timeLimiter)
