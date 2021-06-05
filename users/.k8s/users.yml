@@ -44,6 +44,11 @@ spec:
             limits:
               memory: "500Mi"
               cpu: "500m"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8021
+            initialDelaySeconds: 100
           ports:
             - containerPort: 8021
 ---

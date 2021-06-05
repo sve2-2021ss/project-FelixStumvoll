@@ -40,6 +40,11 @@ spec:
                 configMapKeyRef:
                   name: zipkin-config
                   key: zipkin-service
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8022
+            initialDelaySeconds: 100
           resources:
             limits:
               memory: "500Mi"
@@ -54,7 +59,6 @@ metadata:
 spec:
   selector:
     app: games-service
-  type: LoadBalancer
   ports:
     - port: 8022
       targetPort: 8022

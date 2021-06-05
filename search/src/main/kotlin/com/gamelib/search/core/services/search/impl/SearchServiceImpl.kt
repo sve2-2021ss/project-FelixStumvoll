@@ -4,6 +4,7 @@ import com.gamelib.search.SearchConfig
 import com.gamelib.search.core.services.search.SearchService
 import com.gamelib.search.core.services.search.entities.SearchResult
 import com.gamelib.search.util.mapAll
+import io.github.resilience4j.circuitbreaker.CallNotPermittedException
 import io.github.resilience4j.circuitbreaker.CircuitBreaker
 import io.github.resilience4j.kotlin.circuitbreaker.CircuitBreakerConfig
 import io.github.resilience4j.kotlin.circuitbreaker.circuitBreaker
@@ -29,6 +30,7 @@ class SearchServiceImpl(private val config: SearchConfig, private val webClient:
         Triple(
             Retry.of("search-$it", RetryConfig {
                 maxAttempts(3)
+                ignoreExceptions(CallNotPermittedException::class.java)
             }),
             CircuitBreaker.of("search-$it", CircuitBreakerConfig {
                 slidingWindowSize(10)
@@ -36,12 +38,12 @@ class SearchServiceImpl(private val config: SearchConfig, private val webClient:
                 permittedNumberOfCallsInHalfOpenState(3)
                 waitDurationInOpenState(Duration.ofSeconds(20))
                 failureRateThreshold(50f)
-                slowCallDurationThreshold(Duration.ofMillis(500))
+                slowCallDurationThreshold(Duration.ofMillis(350))
                 slowCallRateThreshold(50f)
                 automaticTransitionFromOpenToHalfOpenEnabled(true)
             }),
             TimeLimiter.of(TimeLimiterConfig {
-                timeoutDuration(Duration.ofMillis(400))
+                timeoutDuration(Duration.ofMillis(100))
             })
         )
     }

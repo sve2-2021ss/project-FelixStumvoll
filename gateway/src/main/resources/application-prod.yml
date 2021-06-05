@@ -10,7 +10,7 @@ spring:
             - Path=/users/**
           filters:
             - RewritePath=/users(?<path>/?.*), $\{path}
-            - CircuitBreaker
+            - CircuitBreaker=users
         - id: games
           uri: ${GAMES_SERVICE}
           predicates:
