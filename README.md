@@ -38,7 +38,7 @@ To gain better insights in the K8S cluster the tool `Lens` was used.
 
 ### Spring Gateway
 
-To provide a "single point of entry" to the microservice architecture a gateway was implemented using the Spring Cloud Gateway. At first the configuration was done in code however to allow for greater configurability it was refactored to the spring configuration. In addition to that the Resilience4J CircuitBreaker was setup for the routes of the gateway. The routing defined for the users service can be seen below.
+To provide a "single point of entry" to the microservice architecture a gateway was implemented using the Spring Cloud Gateway. The configuration was done in the `application.yml` file. In addition to that the Resilience4J CircuitBreaker was setup for the routes of the gateway. The routing defined for the users service can be seen below. This redirects all requests starting with `/users` to the users service and strips the prefix.
 
 ```yml
 spring:
@@ -58,14 +58,19 @@ spring:
 
 To provide fault tolerance between communicating services `resilience4j` was chosen as library.
 Specifically the modules `CircuitBreaker`, `Retry` and `Timelimiter` were used.
-The setup was sadly not as straight forward as initially thought since the library provides lots of different dependencies, namely for Spring Cloud Configuration, Spring Boot Annotations, Project Reactor and one for Kotlin Flow support. In addition to that Spring provides two dependencies as well one for WebMVC and one for spring reactive. However once set up it works very well. The screenshot below shows that the request gets retried and timelimited to 100ms when the users service is not reachable.
+The setup was sadly not as straight forward as initially thought since the library provides lots of different dependencies, namely for Spring Cloud Configuration, Spring Boot Annotations, Project Reactor and one for Kotlin Flow support. Spring also provides two dependencies as well one for WebMVC and one for Spring reactive. This is in addition to the base dependencies of resilience4j for each module (retry, circuit breaker, etc.)
 
-![](doc/images/retries.png)
+The gateway uses the reactive spring dependency and the search service uses the Kotlin Flow dependency, as well as the dependencies to the base modules (retry, circuit breaker, timelimiter).
 
-Once the circuit breaker is open the service wont send further requests to the service
+The screenshot below shows a request to the search service. In this case, the users service is down. The screenshot shows, that the request gets retried three times. In addition to that the request is time limited to 100ms before the request is cancelled.
 
-![](doc/images/circuitbreaker.png)
+![retries](doc/images/retries.png)
 
+Once enough requests to the users service failed the circuit breaker will open and the search service wont send further requests to the users service.
+
+![circuitbreaker](doc/images/circuitbreaker.png)
+
+To make this work properly the 
 
 ### Distributed Tracing
 
@@ -78,5 +83,3 @@ In the screenshot below the span of a request to the search service can be seen.
 ## Remaining Tasks
 
 One of the main task going into the project is to extend the functionality of the services. Since they were only implemented to try out the covered technologies, they are pretty bare bone at the moment.
-
-An additional improvement will be the introduction of helm to better manage the deployment of the services.
