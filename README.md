@@ -70,7 +70,60 @@ Once enough requests to the users service failed the circuit breaker will open a
 
 ![circuitbreaker](doc/images/circuitbreaker.png)
 
-To make this work properly the 
+#### Configuration
+
+The gateway is configured using the `application.yml` (as seen below). There is an instance configured for each service. The circuit breaker is then used in the routes definition (see [Spring Gateway](#spring-gateway)).
+
+```yml
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 5s
+        failureRateThreshold: 50
+    instances:
+      users:
+        baseConfig: default
+      games:
+        baseConfig: default
+      search:
+        baseConfig: default
+  timelimiter:
+    configs:
+      default:
+        timeoutDuration: 10s
+```
+
+The configuration for the search service is done in code. This is because the search service can search multiple services but each "searchable" service needs its own configuration (otherwise the resilience4j configurations would interfere with one another). The snippet below shows the configuration of `retry`, `circuit breaker` and `retry`. The `$it` in the name of the service represents the name of the service and is provided when the configurations are created.
+
+An important configuration aspect is the `ignoreExceptions` in the `retry` configuration.
+This prevents retries from happening if the circuit breaker is open.
+
+```kotlin
+Retry.of("search-$it", RetryConfig {
+    maxAttempts(3)
+    ignoreExceptions(CallNotPermittedException::class.java)
+});
+
+CircuitBreaker.of("search-$it", CircuitBreakerConfig {
+    slidingWindowSize(10)
+    minimumNumberOfCalls(5)
+    permittedNumberOfCallsInHalfOpenState(3)
+    waitDurationInOpenState(Duration.ofSeconds(20))
+    failureRateThreshold(50f)
+    slowCallDurationThreshold(Duration.ofMillis(350))
+    slowCallRateThreshold(50f)
+    automaticTransitionFromOpenToHalfOpenEnabled(true)
+});
+
+TimeLimiter.of("search-$it",TimeLimiterConfig {
+    timeoutDuration(Duration.ofMillis(100))
+});        
+```
 
 ### Distributed Tracing
 
