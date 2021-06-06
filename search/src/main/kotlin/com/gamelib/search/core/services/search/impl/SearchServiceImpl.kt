@@ -42,7 +42,7 @@ class SearchServiceImpl(private val config: SearchConfig, private val webClient:
                 slowCallRateThreshold(50f)
                 automaticTransitionFromOpenToHalfOpenEnabled(true)
             }),
-            TimeLimiter.of(TimeLimiterConfig {
+            TimeLimiter.of("search-$it", TimeLimiterConfig {
                 timeoutDuration(Duration.ofMillis(100))
             })
         )
