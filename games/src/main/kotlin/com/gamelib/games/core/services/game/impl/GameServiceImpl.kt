@@ -2,9 +2,8 @@ package com.gamelib.games.core.services.game.impl
 
 import com.gamelib.games.core.dtos.GameDto
 import com.gamelib.games.core.dtos.TagDto
+import com.gamelib.games.core.dtos.toDto
 import com.gamelib.games.core.services.game.GameService
-import com.gamelib.games.dal.entities.Game
-import com.gamelib.games.dal.entities.Tag
 import com.gamelib.games.dal.repositories.GameRepository
 import com.gamelib.games.dal.repositories.TagRepository
 import org.springframework.stereotype.Service
@@ -22,8 +21,5 @@ class GameServiceImpl(
         (gameRepository.getAllByTerm(term) + gameRepository.getAllByTagContaining(term)).map { it.toDto() }
 
     override fun getTagsForGame(id: Long): List<TagDto> = tagRepository.getAllForGame(id).map { it.toDto() }
-
-    private fun Game.toDto() = GameDto(title, description)
-
-    private fun Tag.toDto() = TagDto(description, id!!)
+    override fun getGamesForTag(tagId: Long): List<GameDto> = gameRepository.getAllByTagsId(tagId).map { it.toDto() }
 }

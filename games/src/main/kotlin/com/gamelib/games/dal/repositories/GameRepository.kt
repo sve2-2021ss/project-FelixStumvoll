@@ -18,4 +18,6 @@ interface GameRepository : JpaRepository<Game, Long> {
                             lower(t.description) like lower(concat('%',:term,'%'))"""
     )
     fun getAllByTagContaining(term: String): List<Game>
+
+    fun getAllByTagsId(tagId: Long): List<Game>
 }

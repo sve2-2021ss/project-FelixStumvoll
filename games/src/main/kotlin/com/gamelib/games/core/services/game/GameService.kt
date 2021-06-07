@@ -8,4 +8,5 @@ interface GameService {
     fun getAll(): List<GameDto>
     fun getAllByTerm(term: String): List<GameDto>
     fun getTagsForGame(id: Long): List<TagDto>
+    fun getGamesForTag(tagId: Long): List<GameDto>
 }
