@@ -7,8 +7,8 @@ data class User(
     var name: String,
     var email: String,
     @ManyToMany(fetch = FetchType.LAZY)
-    var friends: MutableList<User>,
+    var friends: MutableSet<User>,
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
 )

@@ -24,6 +24,10 @@ repositories {
     maven { url = uri("https://repo.spring.io/milestone") }
 }
 
+noArg {
+    annotation("com.gamelib.users.util.NoArg")
+}
+
 extra["springCloudVersion"] = "2020.0.3-SNAPSHOT"
 
 dependencies {
