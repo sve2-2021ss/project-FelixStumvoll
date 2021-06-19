@@ -17,4 +17,7 @@ class GameController(private val gameService: GameService) {
 
     @GetMapping("/{id}/tags")
     fun getTagsForGame(@PathVariable id: Long): List<TagDto> = gameService.getTagsForGame(id)
+
+    @GetMapping("/{gameId}/achievements")
+    fun getAchievementsForGame(@PathVariable gameId: Long) = gameService.getAchievementsForGame(gameId)
 }
