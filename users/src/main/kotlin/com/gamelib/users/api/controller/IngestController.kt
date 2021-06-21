@@ -14,6 +14,18 @@ class IngestController(
     private val statisticsService: StatisticsService,
     private val userService: UserModificationService
 ) {
+    @PostMapping
+    fun addUser(@RequestBody newUserDto: NewUserDto) = with(newUserDto) {
+        userService.addUser(email, name)
+    }
+
+    @PostMapping("{userId}/game/{gameId}")
+    fun addGame(@PathVariable userId: Long, @PathVariable gameId: Long) = userService.addGameToUser(userId, gameId)
+
+    @DeleteMapping("{userId}/game/{gameId}")
+    fun removeGame(@PathVariable userId: Long, @PathVariable gameId: Long) =
+        userService.removeGameFromUser(userId, gameId)
+
     @PostMapping("{userId}/game/{gameId}/playtime")
     fun addPlaytime(
         @PathVariable userId: Long, @PathVariable gameId: Long, @RequestBody playtimeDto: PlaytimeDto
@@ -27,11 +39,6 @@ class IngestController(
         @PathVariable achievementId: Long,
         @RequestBody achievementDto: AchievementRegistrationDto
     ) = statisticsService.registerAchievement(userId, gameId, achievementId, achievementDto.timeAchieved)
-
-    @PostMapping("/")
-    fun addUser(@RequestBody newUserDto: NewUserDto) = with(newUserDto) {
-        userService.addUser(email, name)
-    }
 
     @PostMapping("/{userId}/friend/{friendId}")
     fun addFriend(@PathVariable userId: Long, @PathVariable friendId: Long) =
