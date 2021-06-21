@@ -4,10 +4,11 @@ import javax.persistence.*
 
 @Entity
 data class User(
-    var name: String,
+    @Column(unique = true)
     var email: String,
+    var name: String,
     @ManyToMany(fetch = FetchType.LAZY)
-    var friends: MutableSet<User>,
+    var friends: MutableSet<User> = mutableSetOf(),
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
