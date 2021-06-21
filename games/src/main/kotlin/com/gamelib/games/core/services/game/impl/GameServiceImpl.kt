@@ -2,29 +2,50 @@ package com.gamelib.games.core.services.game.impl
 
 import com.gamelib.games.core.dtos.AchievementDto
 import com.gamelib.games.core.dtos.GameDto
-import com.gamelib.games.core.dtos.TagDto
 import com.gamelib.games.core.dtos.toDto
+import com.gamelib.games.core.exceptions.EntityNotFoundException
 import com.gamelib.games.core.services.game.GameService
+import com.gamelib.games.dal.entities.Game
 import com.gamelib.games.dal.repositories.AchievementRepository
 import com.gamelib.games.dal.repositories.GameRepository
-import com.gamelib.games.dal.repositories.TagRepository
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import javax.transaction.Transactional
 
 @Service
 class GameServiceImpl(
     private val gameRepository: GameRepository,
-    private val tagRepository: TagRepository,
     private val achievementRepository: AchievementRepository
 ) : GameService {
     override fun getById(id: Long): GameDto? = gameRepository.findById(id).map { it.toDto() }.orElse(null)
 
     override fun getAll(): List<GameDto> = gameRepository.findAll().map { it.toDto() }
 
-    override fun getAllByTerm(term: String): List<GameDto> =
-        (gameRepository.getAllByTerm(term) + gameRepository.getAllByTagContaining(term)).map { it.toDto() }
+    @Transactional
+    override fun insert(title: String, description: String, price: Double) {
+        gameRepository.save(Game(title, description, price))
+    }
 
-    override fun getTagsForGame(id: Long): List<TagDto> = tagRepository.getAllForGame(id).map { it.toDto() }
-    override fun getGamesForTag(tagId: Long): List<GameDto> = gameRepository.getAllByTagsId(tagId).map { it.toDto() }
+    @Transactional
+    override fun update(id: Long, title: String?, description: String?, price: Double?) {
+        val game = gameRepository.findByIdOrNull(id) ?: throw EntityNotFoundException()
+
+        title?.let {
+            game.title = it
+        }
+
+        description?.let {
+            game.description = it
+        }
+
+        price?.let {
+            game.price = it
+        }
+    }
+
+    override fun getAllByTerm(term: String): List<GameDto> =
+        gameRepository.getAllByTerm(term).map { it.toDto() }
+
     override fun getAchievementsForGame(gameId: Long): List<AchievementDto> =
         achievementRepository.getAchievementByGameId(gameId).map { it.toDto(gameId) }
 }

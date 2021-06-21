@@ -11,13 +11,4 @@ interface GameRepository : JpaRepository<Game, Long> {
                             lower(g.description) like lower(concat('%',:term,'%'))"""
     )
     fun getAllByTerm(term: String): List<Game>
-
-    @Query(
-        """select distinct g from Tag t 
-                            join t.games g where 
-                            lower(t.description) like lower(concat('%',:term,'%'))"""
-    )
-    fun getAllByTagContaining(term: String): List<Game>
-
-    fun getAllByTagsId(tagId: Long): List<Game>
 }
