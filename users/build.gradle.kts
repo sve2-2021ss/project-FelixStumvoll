@@ -45,6 +45,10 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     //web
     implementation("org.springframework.boot:spring-boot-starter-web")
+    //auth
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.security:spring-security-oauth2-resource-server")
+    implementation("org.springframework.security:spring-security-oauth2-jose")
     //db
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-validation")
