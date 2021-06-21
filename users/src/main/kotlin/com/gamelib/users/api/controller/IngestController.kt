@@ -9,7 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@PreAuthorize("isAuthenticated() and hasAuthority('ingest')")
+@PreAuthorize("isAuthenticated() and hasAuthority('ingest:data')")
 class IngestController(
     private val statisticsService: StatisticsService,
     private val userService: UserModificationService
