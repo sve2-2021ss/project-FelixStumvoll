@@ -39,6 +39,10 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j")
     //web
     implementation("org.springframework.boot:spring-boot-starter-web")
+    //auth
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.security:spring-security-oauth2-resource-server")
+    implementation("org.springframework.security:spring-security-oauth2-jose")
     //dev
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     //db
