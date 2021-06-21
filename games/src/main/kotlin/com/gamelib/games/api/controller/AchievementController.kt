@@ -7,7 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@PreAuthorize("isAuthenticated() and hasPermission('ingest')")
+@PreAuthorize("isAuthenticated() and hasAuthority('ingest')")
 class AchievementController(private val achievementService: AchievementService) {
     @PatchMapping("/achievement/{achievementId}")
     fun updateAchievement(

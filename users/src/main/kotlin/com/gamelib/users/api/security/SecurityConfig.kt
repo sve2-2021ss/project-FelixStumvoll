@@ -10,9 +10,12 @@ import org.springframework.security.oauth2.jwt.JwtDecoder
 import org.springframework.security.oauth2.jwt.JwtDecoders
 import org.springframework.security.oauth2.jwt.JwtValidators
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter
+import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter
+
 
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, jsr250Enabled = true, securedEnabled = true)
 class SecurityConfig(
     @Value("\${auth0.audience}")
     private val audience: String,
@@ -24,14 +27,26 @@ class SecurityConfig(
             .oauth2ResourceServer()
             .jwt()
             .decoder(jwtDecoder())
+            .jwtAuthenticationConverter(jwtAuthenticationConverter())
     }
 
     fun jwtDecoder(): JwtDecoder {
         val withAudience = AudienceValidator(audience)
         val withIssuer = JwtValidators.createDefaultWithIssuer(issuer)
-        val validator = DelegatingOAuth2TokenValidator(withAudience, withIssuer)
-        return (JwtDecoders.fromOidcIssuerLocation<JwtDecoder>(issuer) as NimbusJwtDecoder).apply {
-            setJwtValidator(validator)
+
+        val jwtDecoder = JwtDecoders.fromOidcIssuerLocation<JwtDecoder>(issuer) as NimbusJwtDecoder
+        jwtDecoder.setJwtValidator(DelegatingOAuth2TokenValidator(withAudience, withIssuer))
+        return jwtDecoder
+    }
+
+    fun jwtAuthenticationConverter(): JwtAuthenticationConverter {
+        val converter = JwtGrantedAuthoritiesConverter().apply {
+            setAuthoritiesClaimName("permissions")
+            setAuthorityPrefix("")
+        }
+
+        return JwtAuthenticationConverter().apply {
+            setJwtGrantedAuthoritiesConverter(converter)
         }
     }
 }

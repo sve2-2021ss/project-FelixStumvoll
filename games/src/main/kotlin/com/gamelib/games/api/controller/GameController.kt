@@ -13,7 +13,7 @@ class GameController(private val gameService: GameService) {
     fun getById(@PathVariable id: Long): GameDto? = gameService.getById(id)
 
     @PatchMapping("/{id}")
-    @PreAuthorize("isAuthenticated() and hasPermission('ingest')")
+    @PreAuthorize("isAuthenticated() and hasAuthority('ingest')")
     fun updateGame(@PathVariable id: Long, @RequestBody gameUpdateDto: GameUpdateDto) = with(gameUpdateDto) {
         gameService.update(id, title, description, price)
     }
@@ -22,7 +22,7 @@ class GameController(private val gameService: GameService) {
     fun getAll(): List<GameDto> = gameService.getAll()
 
     @PostMapping
-    @PreAuthorize("isAuthenticated() and hasPermission('ingest')")
+    @PreAuthorize("isAuthenticated() and hasAuthority('ingest')")
     fun insert(@RequestBody gameInsertDto: GameInsertDto) =
         with(gameInsertDto) { gameService.insert(title, description, price) }
 
