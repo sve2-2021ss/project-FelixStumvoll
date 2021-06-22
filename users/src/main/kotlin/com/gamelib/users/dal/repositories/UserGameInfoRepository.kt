@@ -14,8 +14,5 @@ interface UserGameInfoRepository : JpaRepository<UserGameInfo, Long> {
     @Query("select ugi from UserGameInfo ugi where ugi.user.id = :userId and ugi.owned = true")
     fun getGamesOwnedByUser(userId: Long): List<UserGameInfo>
 
-    @Query("select ugi.owned from UserGameInfo  ugi where ugi.user.id = :userId and ugi.gameId = :gameId")
-    fun isGameOwnedByUser(userId: Long, gameId: Long): Boolean
-
     fun getByUserIdAndGameId(userId: Long, gameId: Long): UserGameInfo?
 }

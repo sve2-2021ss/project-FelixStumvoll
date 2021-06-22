@@ -3,13 +3,13 @@ package com.gamelib.games.core.services.game.impl
 import com.gamelib.games.core.dtos.AchievementDto
 import com.gamelib.games.core.dtos.GameDto
 import com.gamelib.games.core.dtos.toDto
-import com.gamelib.games.core.exceptions.EntityNotFoundException
 import com.gamelib.games.core.services.game.GameService
 import com.gamelib.games.dal.entities.Game
 import com.gamelib.games.dal.repositories.AchievementRepository
 import com.gamelib.games.dal.repositories.GameRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import javax.persistence.EntityNotFoundException
 import javax.transaction.Transactional
 
 @Service

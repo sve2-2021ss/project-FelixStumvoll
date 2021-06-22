@@ -1,12 +1,12 @@
 package com.gamelib.games.core.services.achievement.impl
 
-import com.gamelib.games.core.exceptions.EntityNotFoundException
 import com.gamelib.games.core.services.achievement.AchievementService
 import com.gamelib.games.dal.entities.Achievement
 import com.gamelib.games.dal.repositories.AchievementRepository
 import com.gamelib.games.dal.repositories.GameRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import javax.persistence.EntityNotFoundException
 import javax.transaction.Transactional
 
 @Service
