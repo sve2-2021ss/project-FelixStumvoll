@@ -16,7 +16,7 @@ import javax.validation.ConstraintViolationException
 @RestControllerAdvice
 class ExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(EmailUsedException::class, GameNotOwnedException::class)
+    @ExceptionHandler(EmailUsedException::class, GameNotOwnedException::class, IllegalStateException::class)
     fun invalidRequest() {
     }
 
@@ -43,6 +43,16 @@ class ExceptionHandler {
             is MismatchedInputException -> "cannot parse ${c.path.last().fieldName}"
             else -> "Invalid Request"
         }.let { ErrorResponse(it) }
+
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(AccessDeniedException::class)
+    fun forbidden() {
+    }
+
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(org.springframework.security.access.AccessDeniedException::class)
+    fun unauthorized() {
+    }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception::class)

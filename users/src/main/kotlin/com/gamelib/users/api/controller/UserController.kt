@@ -1,6 +1,5 @@
 package com.gamelib.users.api.controller
 
-import com.gamelib.users.core.dtos.UserDto
 import com.gamelib.users.core.services.statistics.StatisticsService
 import com.gamelib.users.core.services.user.UserService
 import org.springframework.web.bind.annotation.GetMapping
@@ -10,13 +9,13 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class UserController(private val userService: UserService, private val statisticsService: StatisticsService) {
     @GetMapping("/{userId}")
-    fun getById(@PathVariable userId: Long): UserDto? = userService.getById(userId)
+    fun getById(@PathVariable userId: Long) = userService.getById(userId)
 
     @GetMapping
-    fun getAll(): List<UserDto> = userService.getAll()
+    fun getAll() = userService.getAll()
 
     @GetMapping("/{userId}/friend")
-    fun getFriendsOfUser(@PathVariable userId: Long): List<UserDto> = userService.getFriendsOfUser(userId)
+    fun getFriendsOfUser(@PathVariable userId: Long) = userService.getFriendsOfUser(userId)
 
     @GetMapping("/{userId}/playtime")
     fun totalPlaytime(@PathVariable userId: Long) = statisticsService.getTotalPlaytime(userId)

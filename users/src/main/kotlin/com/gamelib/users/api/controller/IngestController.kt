@@ -5,6 +5,7 @@ import com.gamelib.users.api.dtos.NewUserDto
 import com.gamelib.users.api.dtos.PlaytimeDto
 import com.gamelib.users.core.services.statistics.StatisticsService
 import com.gamelib.users.core.services.user.UserModificationService
+import org.springframework.http.HttpStatus
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
@@ -15,6 +16,7 @@ class IngestController(
     private val userService: UserModificationService
 ) {
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     fun addUser(@RequestBody newUserDto: NewUserDto) = with(newUserDto) {
         userService.addUser(email, name)
     }
@@ -46,5 +48,5 @@ class IngestController(
 
     @DeleteMapping("/{userId}/friend/{friendId}")
     fun removeFriend(@PathVariable userId: Long, @PathVariable friendId: Long) =
-        userService.addFriendship(userId, friendId)
+        userService.removeFriendship(userId, friendId)
 }
