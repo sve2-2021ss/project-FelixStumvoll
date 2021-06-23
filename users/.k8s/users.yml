@@ -40,6 +40,16 @@ spec:
                 configMapKeyRef:
                   name: zipkin-config
                   key: zipkin-service
+            - name: OAUTH_AUDIENCE
+              valueFrom:
+                configMapKeyRef:
+                  name: oauth-config
+                  key: oauth-audience
+            - name: OAUTH_DOMAIN
+              valueFrom:
+                configMapKeyRef:
+                  name: oauth-config
+                  key: oauth-domain
           resources:
             limits:
               memory: "500Mi"

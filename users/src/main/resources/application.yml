@@ -11,6 +11,3 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: https://${auth0.domain}/
-auth0:
-  audience: https://auth.gamelib.com
-  domain: gamelib.eu.auth0.com

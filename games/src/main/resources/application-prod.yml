@@ -7,3 +7,6 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQL5Dialect
   zipkin.base-url: ${ZIPKIN_SERVICE}
+auth0:
+  audience: ${OAUTH_AUDIENCE}
+  domain: ${OAUTH_DOMAIN}

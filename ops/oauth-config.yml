@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: oauth-config
+data:
+  oauth-audience: https://auth.gamelib.com
+  oauth-domain: gamelib.eu.auth0.com
