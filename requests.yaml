@@ -1,0 +1,758 @@
+_type: export
+__export_format: 4
+__export_date: 2021-06-23T21:20:12.904Z
+__export_source: insomnia.desktop.app:v2021.3.0
+resources:
+  - _id: req_5fa720d133ca415c9a83994a5cd955d3
+    parentId: wrk_aa862072674b4775952ce68f7a89cbfa
+    modified: 1624300015201
+    created: 1624289848050
+    url: https://gamelib.eu.auth0.com/oauth/token
+    name: Get Ingest Token
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: >-
+        {
+        	"client_id": "NFrvT7vSuckQq5TK0YDOXBoiXiFuSd1O",
+        	"client_secret": "oVaHdANBMYudUkjKu0vz8zfOQR_HULMBKjxs5P0Pn-ZB9F1dulS1-InFDyfSRyLL",
+        	"audience": "https://auth.gamelib.com",
+        	"grant_type": "client_credentials"
+        }
+    parameters: []
+    headers:
+      - name: content-type
+        value: application/json
+        id: pair_210b9d9bda8c45dc86d2cf40494533fc
+    authentication: {}
+    metaSortKey: -1624289848050
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: wrk_aa862072674b4775952ce68f7a89cbfa
+    parentId: null
+    modified: 1622033679071
+    created: 1622033679071
+    name: Microservices
+    description: ""
+    scope: collection
+    _type: workspace
+  - _id: req_5cd1c6da1b984993bca26a9c03c6dd0b
+    parentId: fld_fc7739c2908e477786b56e7ae9a5a150
+    modified: 1624483013710
+    created: 1624446466900
+    url: "{{ _.services.search }}"
+    name: Search
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - name: term
+        value: F
+        description: ""
+        id: pair_3a986c5dfd89431d97d537a3c8496c61
+    headers: []
+    authentication: {}
+    metaSortKey: -1624446466900
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_fc7739c2908e477786b56e7ae9a5a150
+    parentId: wrk_aa862072674b4775952ce68f7a89cbfa
+    modified: 1624136453869
+    created: 1624136453869
+    name: Search
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1624136453869
+    _type: request_group
+  - _id: req_49902f5df85945a0ac8e930505529b0b
+    parentId: fld_fb6e4feb4fa94120a10e84eb7e550de5
+    modified: 1624482997156
+    created: 1624136966398
+    url: "{{ _.services.game }}/achievement/{{ _.achievementId }}"
+    name: Update Achievement
+    description: ""
+    method: PATCH
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"name": "Start"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_8c445b13a1934ab6b9a1b701d2b6982d
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    metaSortKey: -1624136966398
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_fb6e4feb4fa94120a10e84eb7e550de5
+    parentId: fld_f45def337e684bb5bd4781e76574dcb2
+    modified: 1624137027558
+    created: 1624136842558
+    name: Achievements
+    description: ""
+    environment:
+      achievementId: 1
+    environmentPropertyOrder:
+      "&":
+        - achievementId
+    metaSortKey: -1624136842558
+    _type: request_group
+  - _id: fld_f45def337e684bb5bd4781e76574dcb2
+    parentId: wrk_aa862072674b4775952ce68f7a89cbfa
+    modified: 1624297994142
+    created: 1624136450949
+    name: Games
+    description: ""
+    environment: {}
+    environmentPropertyOrder: {}
+    metaSortKey: -1624136450949
+    _type: request_group
+  - _id: req_ea0f50639abb4cc989581e49e9805852
+    parentId: fld_fb6e4feb4fa94120a10e84eb7e550de5
+    modified: 1624482974009
+    created: 1624136898400
+    url: "{{ _.services.game }}/{{ _.gameId }}/achievement"
+    name: Insert Achievement
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"name": "Till the end",
+        	"description": "Finished the game"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_127fdc3eebfe4750887428b83e3dea29
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    metaSortKey: -1624136898400
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_9e70301937c647bba11baa0b975ed3c4
+    parentId: fld_fb6e4feb4fa94120a10e84eb7e550de5
+    modified: 1624297885317
+    created: 1624136856298
+    url: "{{ _.services.game }}/{{ _.gameId }}/achievement"
+    name: Get All Achievements for Game
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1624136856298
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_d5950d58cf164426973675ef39ce3eb3
+    parentId: fld_f45def337e684bb5bd4781e76574dcb2
+    modified: 1624482816527
+    created: 1624136687998
+    url: "{{ _.services.game }}"
+    name: Insert Games
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"title": "Forza Horizon",
+        	"description": "lorem ipsum",
+        	"price": 59.99
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_7bc0faddc86447d7bff842089c866aef
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+      disabled: false
+    metaSortKey: -1624136687998
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_3f4360033b45416b8439194cb7eafec2
+    parentId: fld_f45def337e684bb5bd4781e76574dcb2
+    modified: 1624435945931
+    created: 1624136462635
+    url: "{{ _.services.game }}"
+    name: Get All Games
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1624136462635
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_250a60240260418cb9c9e08afb28ef54
+    parentId: fld_f45def337e684bb5bd4781e76574dcb2
+    modified: 1624482949746
+    created: 1624137345216
+    url: "{{ _.services.game }}/{{ _.gameId }}"
+    name: Update Game
+    description: ""
+    method: PATCH
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"title": "Borderlands 24"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_b643eea344cd4b748a93cb141fe99a8a
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    metaSortKey: -1624136462585
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_464ec566e872409386c66c29faf1ac01
+    parentId: fld_f2dbd77a630443299ef4e1850120a576
+    modified: 1624446622681
+    created: 1624301667938
+    url: "{{ _.services.user }}/{{ _.userId }}/friend/{{ _.friendId }}"
+    name: Add Friend
+    description: ""
+    method: POST
+    body: {}
+    parameters: []
+    headers: []
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    metaSortKey: -1624301681889
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_f2dbd77a630443299ef4e1850120a576
+    parentId: fld_7ca0547cffa6465196894590c4608ac6
+    modified: 1624301638732
+    created: 1624301638732
+    name: Ingest
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1624301638732
+    _type: request_group
+  - _id: fld_7ca0547cffa6465196894590c4608ac6
+    parentId: wrk_aa862072674b4775952ce68f7a89cbfa
+    modified: 1624446009862
+    created: 1624136445833
+    name: Users
+    description: ""
+    environment:
+      userId: 1
+      friendId: 2
+    environmentPropertyOrder:
+      "&":
+        - userId
+        - friendId
+    metaSortKey: -1624136445834
+    _type: request_group
+  - _id: req_fb7c577cb1364195b45c29031bcf550c
+    parentId: fld_f2dbd77a630443299ef4e1850120a576
+    modified: 1624450519195
+    created: 1624301681839
+    url: "{{ _.services.user }}/{{ _.userId }}/friend/{{ _.friendId }}"
+    name: Remove Friend
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers: []
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    metaSortKey: -1624301681839
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_56c33ec63c5f4790883fbebd8deac8fb
+    parentId: fld_f2dbd77a630443299ef4e1850120a576
+    modified: 1624482917480
+    created: 1624450641331
+    url: "{{ _.services.user }}/{{ _.userId }}/game/{{ _.gameId }}"
+    name: Add Game To User
+    description: ""
+    method: POST
+    body: {}
+    parameters: []
+    headers: []
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    metaSortKey: -1624300457488
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_a0af4fb12e6a4643baec7cdfe756a316
+    parentId: fld_f2dbd77a630443299ef4e1850120a576
+    modified: 1624454826471
+    created: 1624296827542
+    url: "{{ _.services.user }}/{{ _.userId }}/game/{{ _.gameId }}/playtime"
+    name: Add Playtime to User
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"time": 2000
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_03fbb22dbd0c43e483a1cf9f31895297
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+    metaSortKey: -1624299233137
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_4372364f64c448e590bf258b9c48b0a5
+    parentId: fld_f2dbd77a630443299ef4e1850120a576
+    modified: 1624304873249
+    created: 1624298237479
+    url: "{{ _.services.user }}/{{ _.userId }}/game/{{ _.gameId }}/achievement/{{
+      _.achievementId }}"
+    name: Add Achievement to User
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"timeAchieved": 100
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_03fbb22dbd0c43e483a1cf9f31895297
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+      disabled: false
+    metaSortKey: -1624299233087
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_dd7c2f1664b446cdbdb5491d7d7dab1c
+    parentId: fld_f2dbd77a630443299ef4e1850120a576
+    modified: 1624440959465
+    created: 1624265951155
+    url: "{{ _.services.user }}/"
+    name: Add User
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"email": "felix.stumvoll13@gmail.com",
+        	"name": "Felix"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_37942ced4c5040ac80a9b8c14ec282c2
+    authentication:
+      type: bearer
+      token: "{{ _.token }}"
+      disabled: false
+    metaSortKey: -1624299233037
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_80673bfe5f7e40cf9787a23298fb24d1
+    parentId: fld_7ca0547cffa6465196894590c4608ac6
+    modified: 1624436397622
+    created: 1624140498542
+    url: "{{ _.services.user }}"
+    name: Get All Users
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkJEOFZhYmI0ZjdQNU93dzhxNkVBYyJ9.eyJpc3MiOiJodHRwczovL2dhbWVsaWIuZXUuYXV0aDAuY29tLyIsInN1YiI6Ik5GcnZUN3ZTdWNrUXE1VEswWURPWEJvaVhpRnVTZDFPQGNsaWVudHMiLCJhdWQiOiJodHRwczovL2F1dGguZ2FtZWxpYi5jb20iLCJpYXQiOjE2MjQyODk4NTUsImV4cCI6MTYyNDM3NjI1NSwiYXpwIjoiTkZydlQ3dlN1Y2tRcTVUSzBZRE9YQm9pWGlGdVNkMU8iLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMifQ.dSAO1JyuqyhTFwXmw8-GscQqODqXfvUOfqZqV-rOXhEsg4T_5n2Rewa9XntjimjewCObqUjV7BHBkFuLA6cfni03rrLGcG80HNMZVCYyqSGx9WQGcx1kAs7OHr5K9g5Oenl7YqjdPJbmkcRC8F_SIxa-cAQjdReVhnM5WC8Fjp6hbObFyXMvHLoZGKM6CY6pIKO78TLR_INYu0Dwigjf93ggNryxms5BvdFWye_eG6XUjy8i5Mut6j06YWCGmW48rHrHQK7W4c0CTd0eiP7Xub6JRnzPqdi2Mp7upKXOhddfF43oAk5es2fL_mfSX3RocLy5vioYac_7rNKk6gioeg
+      disabled: true
+    metaSortKey: -1624140498542
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_f2f8de97ea134c4cbc43b30ce1444691
+    parentId: fld_7ca0547cffa6465196894590c4608ac6
+    modified: 1624452416884
+    created: 1624452375024
+    url: "{{ _.services.user }}/{{ _.gameId }}/game/owned"
+    name: Get All Owned Games
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkJEOFZhYmI0ZjdQNU93dzhxNkVBYyJ9.eyJpc3MiOiJodHRwczovL2dhbWVsaWIuZXUuYXV0aDAuY29tLyIsInN1YiI6Ik5GcnZUN3ZTdWNrUXE1VEswWURPWEJvaVhpRnVTZDFPQGNsaWVudHMiLCJhdWQiOiJodHRwczovL2F1dGguZ2FtZWxpYi5jb20iLCJpYXQiOjE2MjQyODk4NTUsImV4cCI6MTYyNDM3NjI1NSwiYXpwIjoiTkZydlQ3dlN1Y2tRcTVUSzBZRE9YQm9pWGlGdVNkMU8iLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMifQ.dSAO1JyuqyhTFwXmw8-GscQqODqXfvUOfqZqV-rOXhEsg4T_5n2Rewa9XntjimjewCObqUjV7BHBkFuLA6cfni03rrLGcG80HNMZVCYyqSGx9WQGcx1kAs7OHr5K9g5Oenl7YqjdPJbmkcRC8F_SIxa-cAQjdReVhnM5WC8Fjp6hbObFyXMvHLoZGKM6CY6pIKO78TLR_INYu0Dwigjf93ggNryxms5BvdFWye_eG6XUjy8i5Mut6j06YWCGmW48rHrHQK7W4c0CTd0eiP7Xub6JRnzPqdi2Mp7upKXOhddfF43oAk5es2fL_mfSX3RocLy5vioYac_7rNKk6gioeg
+      disabled: true
+    metaSortKey: -1624140433734.25
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_12376fbd09ea4a1da2714fa7f5974758
+    parentId: fld_7ca0547cffa6465196894590c4608ac6
+    modified: 1624452445527
+    created: 1624452436137
+    url: "{{ _.services.user }}/{{ _.gameId }}/game/{{ _.gameId }}/achievement"
+    name: Get Achieved Achievements for Game
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkJEOFZhYmI0ZjdQNU93dzhxNkVBYyJ9.eyJpc3MiOiJodHRwczovL2dhbWVsaWIuZXUuYXV0aDAuY29tLyIsInN1YiI6Ik5GcnZUN3ZTdWNrUXE1VEswWURPWEJvaVhpRnVTZDFPQGNsaWVudHMiLCJhdWQiOiJodHRwczovL2F1dGguZ2FtZWxpYi5jb20iLCJpYXQiOjE2MjQyODk4NTUsImV4cCI6MTYyNDM3NjI1NSwiYXpwIjoiTkZydlQ3dlN1Y2tRcTVUSzBZRE9YQm9pWGlGdVNkMU8iLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMifQ.dSAO1JyuqyhTFwXmw8-GscQqODqXfvUOfqZqV-rOXhEsg4T_5n2Rewa9XntjimjewCObqUjV7BHBkFuLA6cfni03rrLGcG80HNMZVCYyqSGx9WQGcx1kAs7OHr5K9g5Oenl7YqjdPJbmkcRC8F_SIxa-cAQjdReVhnM5WC8Fjp6hbObFyXMvHLoZGKM6CY6pIKO78TLR_INYu0Dwigjf93ggNryxms5BvdFWye_eG6XUjy8i5Mut6j06YWCGmW48rHrHQK7W4c0CTd0eiP7Xub6JRnzPqdi2Mp7upKXOhddfF43oAk5es2fL_mfSX3RocLy5vioYac_7rNKk6gioeg
+      disabled: true
+    metaSortKey: -1624140401330.375
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_507feffdb2234894a8f04d8437e5cbea
+    parentId: fld_7ca0547cffa6465196894590c4608ac6
+    modified: 1624396162455
+    created: 1624288810964
+    url: "{{ _.services.user }}/100"
+    name: Get User By Id
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication:
+      type: bearer
+      token: ""
+      disabled: true
+    metaSortKey: -1624140368926.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_e06114e62b274a10bcc7f5f1100d8cba
+    parentId: fld_7ca0547cffa6465196894590c4608ac6
+    modified: 1624446454945
+    created: 1624446430012
+    url: "{{ _.services.user }}/{{ _.userId }}/friend"
+    name: Get Friends of User
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1624140368876.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_fdb5eb28570d4c46af783f04567da25c
+    parentId: fld_7ca0547cffa6465196894590c4608ac6
+    modified: 1624454706467
+    created: 1624446671900
+    url: "{{ _.services.user }}/{{ _.userId }}/game/{{ _.gameId }}/playtime"
+    name: Get Playtime for User for Game
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1624140368826.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_2fa45c9530a949d6bf014996abe878a5
+    parentId: fld_7ca0547cffa6465196894590c4608ac6
+    modified: 1624454752495
+    created: 1624454730227
+    url: "{{ _.services.user }}/{{ _.userId }}/playtime"
+    name: Get Total Playtime for User
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1624138667612.25
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: env_5b460bee4708e33c9f8069d725b30b4fbbdf726b
+    parentId: wrk_aa862072674b4775952ce68f7a89cbfa
+    modified: 1624482830936
+    created: 1622033679376
+    name: Base Environment
+    data:
+      host: localhost
+      gameId: 1
+      userId: 1
+      achievementId: 1
+      token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkJEOFZhYmI0ZjdQNU93dzhxNkVBYyJ9.eyJpc3MiOiJodHRwczovL2dhbWVsaWIuZXUuYXV0aDAuY29tLyIsInN1YiI6Ik5GcnZUN3ZTdWNrUXE1VEswWURPWEJvaVhpRnVTZDFPQGNsaWVudHMiLCJhdWQiOiJodHRwczovL2F1dGguZ2FtZWxpYi5jb20iLCJpYXQiOjE2MjQ0ODI4MjAsImV4cCI6MTYyNDU2OTIyMCwiYXpwIjoiTkZydlQ3dlN1Y2tRcTVUSzBZRE9YQm9pWGlGdVNkMU8iLCJzY29wZSI6ImluZ2VzdDpkYXRhIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIiwicGVybWlzc2lvbnMiOlsiaW5nZXN0OmRhdGEiXX0.sQVMNT5McjHpz_uT3Y7UK9z7RzfoaFLOTTilvMh6djy_DSy-CTsQsa0GJW0UDZ9SNig7tzcV0oUmk2oWu26pBLXYoBSZsur3Z93sR42AIZkKNUWCn2tpVogZIIMTG_YNNrRu2vxS_R52dlbeeCQ8_4_4rAJeVEbvBSBhyIO3zuzexDryUudGPuHzaTE4_Y-8MvBXNzPXCuyE2SnGdiaB4ZXPBBmzlwRiRjQl-q1JRvw3yZ6C66UVmXLO0G1dTZyQPslGam2lv2ggTaa40HHK-jPFJeB98i2Ez3OU5AKatqYt3IMcrk7gP_3T57H8OSh5W9u0iqSjrnwzpiAAKZ4xug
+    dataPropertyOrder:
+      "&":
+        - host
+        - gameId
+        - userId
+        - achievementId
+        - token
+    color: null
+    isPrivate: false
+    metaSortKey: 1622033679376
+    _type: environment
+  - _id: jar_5b460bee4708e33c9f8069d725b30b4fbbdf726b
+    parentId: wrk_aa862072674b4775952ce68f7a89cbfa
+    modified: 1624438927404
+    created: 1622033679380
+    name: Default Jar
+    cookies:
+      - key: JSESSIONID
+        value: 6CF15032534EE5E2D707011612888B73
+        domain: localhost
+        path: /
+        httpOnly: true
+        hostOnly: true
+        creation: 2021-06-19T13:53:43.557Z
+        lastAccessed: 2021-06-23T09:02:07.403Z
+        id: "03567219195228444"
+      - key: did
+        value: s%3Av0%3A99fd4ad0-d2a6-11eb-a1c6-dd9c5a5aa362.8QpNXvIXMCpb%2B1ET80%2BMOzsFA3a%2BFZGU2fBKj7NuNpg
+        expires: 2022-06-21T21:37:35.000Z
+        maxAge: 31557600
+        domain: gamelib.eu.auth0.com
+        path: /
+        secure: true
+        httpOnly: true
+        extensions:
+          - SameSite=None
+        hostOnly: true
+        creation: 2021-06-21T15:37:36.190Z
+        lastAccessed: 2021-06-21T15:37:36.190Z
+        id: "8524466955843437"
+      - key: did_compat
+        value: s%3Av0%3A99fd4ad0-d2a6-11eb-a1c6-dd9c5a5aa362.8QpNXvIXMCpb%2B1ET80%2BMOzsFA3a%2BFZGU2fBKj7NuNpg
+        expires: 2022-06-21T21:37:35.000Z
+        maxAge: 31557600
+        domain: gamelib.eu.auth0.com
+        path: /
+        secure: true
+        httpOnly: true
+        hostOnly: true
+        creation: 2021-06-21T15:37:36.191Z
+        lastAccessed: 2021-06-21T15:37:36.191Z
+        id: "9061005361991161"
+    _type: cookie_jar
+  - _id: spc_3a40638e1f704040a15b6fd98ceea980
+    parentId: wrk_aa862072674b4775952ce68f7a89cbfa
+    modified: 1622033679082
+    created: 1622033679082
+    fileName: Microservices
+    contents: ""
+    contentType: yaml
+    _type: api_spec
+  - _id: env_ba4ec62fb07e46dea75fcf4a14bcdd47
+    parentId: env_5b460bee4708e33c9f8069d725b30b4fbbdf726b
+    modified: 1624136597220
+    created: 1624136043856
+    name: Local
+    data:
+      services:
+        user: "{{ _.host }}:8021"
+        game: "{{ _.host }}:8022"
+        search: "{{ _.host }}:8100"
+    dataPropertyOrder:
+      "&":
+        - services
+      "&~|services":
+        - user
+        - game
+        - search
+    color: "#ff0000"
+    isPrivate: false
+    metaSortKey: 1624136043856
+    _type: environment
+  - _id: env_0c07c88fab2c44869a730cde44cb2226
+    parentId: env_5b460bee4708e33c9f8069d725b30b4fbbdf726b
+    modified: 1624434498322
+    created: 1624136099871
+    name: K8S
+    data:
+      services:
+        user: "{{ _.host }}:9999/user"
+        game: "{{ _.host }}:9999/game"
+        search: "{{ _.host }}:9999/search"
+    dataPropertyOrder:
+      "&":
+        - services
+      "&~|services":
+        - user
+        - game
+        - search
+    color: "#36fa00"
+    isPrivate: false
+    metaSortKey: 1624136043906
+    _type: environment
+  - _id: env_3988fa4591104d839a90c5318d3c8dcd
+    parentId: env_5b460bee4708e33c9f8069d725b30b4fbbdf726b
+    modified: 1624436265488
+    created: 1624436193807
+    name: Local Gateway
+    data:
+      services:
+        user: "{{ _.host }}:9991/user"
+        game: "{{ _.host }}:9991/game"
+        search: "{{ _.host }}:9991/search"
+    dataPropertyOrder:
+      "&":
+        - services
+      "&~|services":
+        - user
+        - game
+        - search
+    color: "#9b05ff"
+    isPrivate: false
+    metaSortKey: 1624436193807
+    _type: environment
