@@ -22,10 +22,11 @@ class IngestController(
     }
 
     @PostMapping("{userId}/game/{gameId}")
-    fun addGame(@PathVariable userId: Long, @PathVariable gameId: Long) = userService.addGameToUser(userId, gameId)
+    fun addGameToUser(@PathVariable userId: Long, @PathVariable gameId: Long) =
+        userService.addGameToUser(userId, gameId)
 
     @DeleteMapping("{userId}/game/{gameId}")
-    fun removeGame(@PathVariable userId: Long, @PathVariable gameId: Long) =
+    fun removeGameFromUser(@PathVariable userId: Long, @PathVariable gameId: Long) =
         userService.removeGameFromUser(userId, gameId)
 
     @PostMapping("{userId}/game/{gameId}/playtime")
