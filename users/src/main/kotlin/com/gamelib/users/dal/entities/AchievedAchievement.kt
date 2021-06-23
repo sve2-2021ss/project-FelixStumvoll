@@ -5,19 +5,20 @@ import java.io.Serializable
 import javax.persistence.*
 
 @NoArg
-data class AchievedAchievementsId(val achievementId: Long, val userGameInfo: UserGameInfo) : Serializable
-
-@Entity
-@IdClass(AchievedAchievementsId::class)
-data class AchievedAchievement(
-    @Id
+@Embeddable
+data class AchievedAchievementId(
+    var achievementId: Long,
     @ManyToOne
     @JoinColumns(
         JoinColumn(),
         JoinColumn()
     )
-    var userGameInfo: UserGameInfo,
+    var userGameInfo: UserGameInfo
+) : Serializable
+
+@Entity
+data class AchievedAchievement(
+    @EmbeddedId
+    var id: AchievedAchievementId,
     var timeAchieved: Long,
-    @Id
-    var achievementId: Long
 )

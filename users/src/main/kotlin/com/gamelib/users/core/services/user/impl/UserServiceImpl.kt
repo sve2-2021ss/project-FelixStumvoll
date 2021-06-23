@@ -8,6 +8,7 @@ import com.gamelib.users.core.exceptions.GameNotOwnedException
 import com.gamelib.users.core.services.user.UserModificationService
 import com.gamelib.users.dal.entities.User
 import com.gamelib.users.dal.entities.UserGameInfo
+import com.gamelib.users.dal.entities.UserGameInfoId
 import com.gamelib.users.dal.repositories.UserGameInfoRepository
 import com.gamelib.users.dal.repositories.UserRepository
 import org.springframework.dao.DataIntegrityViolationException
@@ -47,8 +48,10 @@ class UserServiceImpl(
         when {
             userGameInfo == null -> userGameInfoRepository.save(
                 UserGameInfo(
-                    user,
-                    gameId,
+                    UserGameInfoId(
+                        gameId,
+                        user
+                    ),
                     0,
                     true
                 )
@@ -69,12 +72,11 @@ class UserServiceImpl(
         userGameInfo.owned = false
     }
 
-    override fun addUser(email: String, name: String) {
-        try {
-            transactionTemplate.execute { userRepository.save(User(email, name)) }
-        } catch (ex: DataIntegrityViolationException) {
-            throw EmailUsedException(email)
-        }
+    override fun addUser(email: String, name: String): UserDto = try {
+        transactionTemplate.execute { userRepository.save(User(email, name)) }?.toDto()
+            ?: throw IllegalStateException()
+    } catch (ex: DataIntegrityViolationException) {
+        throw EmailUsedException(email)
     }
 
     @Transactional

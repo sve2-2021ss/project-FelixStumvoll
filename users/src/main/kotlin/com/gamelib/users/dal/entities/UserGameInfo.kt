@@ -5,13 +5,16 @@ import java.io.Serializable
 import javax.persistence.*
 
 @NoArg
-data class UserGameInfoId(val gameId: Long, val user: User) : Serializable
+@Embeddable
+data class UserGameInfoId(
+    var gameId: Long,
+    @JoinColumn @ManyToOne var user: User
+) : Serializable
 
 @Entity
-@IdClass(UserGameInfoId::class)
 data class UserGameInfo(
-    @Id @JoinColumn @ManyToOne var user: User,
-    @Id var gameId: Long,
+    @EmbeddedId
+    var id: UserGameInfoId,
     var timePlayedMillis: Long,
     var owned: Boolean
 )

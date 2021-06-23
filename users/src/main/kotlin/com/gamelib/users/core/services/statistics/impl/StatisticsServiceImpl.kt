@@ -5,6 +5,7 @@ import com.gamelib.users.core.dtos.toDto
 import com.gamelib.users.core.exceptions.GameNotOwnedException
 import com.gamelib.users.core.services.statistics.StatisticsService
 import com.gamelib.users.dal.entities.AchievedAchievement
+import com.gamelib.users.dal.entities.AchievedAchievementId
 import com.gamelib.users.dal.repositories.AchievedAchievementRepository
 import com.gamelib.users.dal.repositories.UserGameInfoRepository
 import org.springframework.stereotype.Service
@@ -35,9 +36,8 @@ class StatisticsServiceImpl(
 
         achievedAchievementRepository.save(
             AchievedAchievement(
-                userGameInfo,
+                AchievedAchievementId(achievementId, userGameInfo),
                 timeAchieved,
-                achievementId
             )
         )
     }

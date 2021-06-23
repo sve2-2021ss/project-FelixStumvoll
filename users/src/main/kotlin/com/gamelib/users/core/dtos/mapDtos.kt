@@ -7,7 +7,12 @@ import com.gamelib.users.dal.entities.UserGameInfo
 fun User.toDto() = UserDto(name, email, id!!)
 
 fun UserGameInfo.toDto(userId: Long? = null) =
-    UserGameStatsDto(userId ?: user.id!!, gameId, timePlayedMillis, owned)
+    UserGameStatsDto(userId ?: id.user.id!!, id.gameId, timePlayedMillis, owned)
 
 fun AchievedAchievement.toDto(userId: Long? = null, gameId: Long? = null) =
-    AchievedAchievementDto(achievementId, userId ?: userGameInfo.user.id!!, gameId ?: userGameInfo.gameId, timeAchieved)
+    AchievedAchievementDto(
+        id.achievementId,
+        userId ?: id.userGameInfo.id.user.id!!,
+        gameId ?: id.userGameInfo.id.gameId,
+        timeAchieved
+    )
