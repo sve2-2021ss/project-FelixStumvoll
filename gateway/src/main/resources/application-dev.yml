@@ -7,10 +7,17 @@ spring:
         - id: users
           uri: http://localhost:8021
           predicates:
-            - Path=/users/**
+            - Path=/user/**
           filters:
-            - RewritePath=/users/(?<path>.*), /$\{path}
+            - RewritePath=/user(?<path>/?.*), $\{path}
             - CircuitBreaker=users
+        - id: games
+          uri: http://localhost:8022
+          predicates:
+            - Path=/game/**
+          filters:
+            - RewritePath=/game(?<path>/?.*), $\{path}
+            - CircuitBreaker=games
         - id: search
           uri: http://localhost:8100
           predicates:
