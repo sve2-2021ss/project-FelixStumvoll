@@ -4,7 +4,7 @@
 
 The project idea consists of a game library service like Steam or Epic Games Store. The service manages games, users and provides a search to search for different items. A major aspect of the project is the deployment. Every service is deployed including their dependencies (e.g. databases) are deployed inside a Kubernetes cluster. Another major aspect is resilience. The whole system makes use of resilience4j to provide fault tolerance. To monitor the services in the cluster, zipkin was used for distributed tracing.
 
-### Architecture
+## Architecture
 
 ![architecture](doc/images/architecture.png)
 
@@ -15,9 +15,9 @@ The architecture consists of four microservices:
 * Users Service: Provides information about users and what friends they have, which games they own, which achievements they achieved and how much time they played
 * Search Service: Search Interface which allows searching in multiple other services (games and users in this case)
 
-#### Services
+### Services
 
-##### Spring Gateway
+#### Spring Gateway
 
 To provide a "single point of entry" to the microservice architecture a gateway was implemented using the Spring Cloud Gateway. The configuration was done in the `application.yml` file. In addition to that the Resilience4J CircuitBreaker was setup for the routes of the gateway. This means when a service is unavailable the gateway will immediately short circuit the request when a threshold of requests fail. The routing defined for the users service can be seen below. This redirects all requests starting with `/users` to the users service and strips the prefix using the `StripPrefix` filter.
 
@@ -35,7 +35,7 @@ spring:
             - CircuitBreaker=users
 ```
 
-##### Games
+#### Games
 
 The games service manages and provides information about games and the achievements of each game.
 
@@ -50,7 +50,7 @@ For this it provides the following endpoints:
 * updating an achievement
 * searching for games (see [Search](#search))
 
-##### Users
+#### Users
 
 The users service is responsible for storing user data like name and email address and his friends. The service also stores which games the user owns, how much playtime he/she has on each game and which achievements he/she achieved for each game.
 
@@ -70,7 +70,7 @@ The users service provides the following endpoints:
 * adding an achievement to the achieved achievements for a game
 * searching for users (see [Search](#search))
 
-##### Search
+#### Search
 
 The search service provides an omni search, which allows to search for a term in multiple services. In the current implementation it searches the games and users services. The services are provided via the config and it is easily possible to add more services in the future. The only requirement for a service to be searchable is the implementation of a `/search` endpoint which receives a query variable `term` and returns a list of results. The requests to the other services are made in parallel. Additionally resilience4j is used (see [Resilience4J](#resilience4j)). Every request is retried three times, each of those requests is also limited to 100ms. In addition to that a circuit breaker was configured which means search queries are not slowed down when one of the services is down.
 
@@ -101,6 +101,8 @@ An example response for the search `F` can be seen below.
   }
 ]
 ```
+
+## Implementation Aspects
 
 ### OAuth
 
@@ -297,3 +299,13 @@ This allows the tracing of a request through multiple services as one related re
 In the screenshot below the span of a request to the search service can be seen.
 
 ![zipkin](doc/images/zipkin.png)
+
+## Conclusion
+
+Spring provides a lot of useful libraries for developing microservice systems. For example the Spring Cloud Gateway, which provides an easily configurable entry point to the system. It also comes with useful functionality like removing prefixes of URLs. Spring also provides integrations for resilience4j which is also a crucial library for developing microservices.
+
+Resilience4J provides multiple modules for fault tolerant communication between multiple microservices. It does so by providing a simple to use API for the developer as well as very fine grained configuration options to customize the behaviour of the library. Resilience4J has also many integrations to different technologies, for example Spring, Kotlin, Spring Cloud Configuration which allows easy integration in any system. On top of that it provides a great documentation.
+
+To be able to comprehend the communication between microservices additional tools are necessary as requests might pass through multiple services before returning. To be able to trace requests through the network, Zipkin is a great addition for a microservice architecture. This tool provides great integration to spring as the only setup requirement was adding the `starter-sleuth` and `sleuth-zipkin` library and providing the service with the Zipkin URL. It than traces all the request and also provides the user with a simple to use UI.
+
+Kubernetes is a very powerful container orchestration tool. It gives the developer fine grained control over how the application should be deployed. Kubernetes provides many tools which cover common needs in microservices architectures like replication through deployments, load balancing with services or defining configuration and secrets in config and secret maps. Although the learning curve of Kubernetes is steep, once understood it is a powerful tool for deploying microservice applications.
