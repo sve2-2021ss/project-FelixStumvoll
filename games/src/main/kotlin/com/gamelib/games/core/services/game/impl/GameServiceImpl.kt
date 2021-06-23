@@ -17,14 +17,14 @@ class GameServiceImpl(
     private val gameRepository: GameRepository,
     private val achievementRepository: AchievementRepository
 ) : GameService {
-    override fun getById(id: Long): GameDto? = gameRepository.findById(id).map { it.toDto() }.orElse(null)
+    override fun getById(id: Long): GameDto =
+        gameRepository.findByIdOrNull(id)?.toDto() ?: throw EntityNotFoundException()
 
     override fun getAll(): List<GameDto> = gameRepository.findAll().map { it.toDto() }
 
     @Transactional
-    override fun insert(title: String, description: String, price: Double) {
-        gameRepository.save(Game(title, description, price))
-    }
+    override fun insert(title: String, description: String, price: Double): GameDto =
+        gameRepository.save(Game(title, description, price)).toDto()
 
     @Transactional
     override fun update(id: Long, title: String?, description: String?, price: Double?) {

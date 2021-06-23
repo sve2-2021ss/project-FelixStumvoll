@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 class GameController(private val gameService: GameService) {
     @GetMapping("/{id}")
-    fun getById(@PathVariable id: Long): GameDto? = gameService.getById(id)
+    fun getById(@PathVariable id: Long) = gameService.getById(id)
 
     @PatchMapping("/{id}")
     @PreAuthorize("isAuthenticated() and hasAuthority('ingest:data')")

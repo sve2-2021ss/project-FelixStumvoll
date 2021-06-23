@@ -37,6 +37,16 @@ class ExceptionHandler {
             else -> "Invalid Request"
         }.let { ErrorResponse(it) }
 
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(AccessDeniedException::class)
+    fun forbidden() {
+    }
+
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(org.springframework.security.access.AccessDeniedException::class)
+    fun unauthorized() {
+    }
+
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception::class)
     fun catchAll(ex: Exception) {

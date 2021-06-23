@@ -13,13 +13,11 @@ class AchievementController(private val achievementService: AchievementService) 
     fun updateAchievement(
         @PathVariable achievementId: Long,
         @RequestBody achievementUpdateDto: AchievementUpdateDto
-    ) {
-        achievementService.update(
-            achievementId,
-            achievementUpdateDto.name,
-            achievementUpdateDto.description
-        )
-    }
+    ) = achievementService.update(
+        achievementId,
+        achievementUpdateDto.name,
+        achievementUpdateDto.description
+    )
 
     @PostMapping("/{gameId}/achievement")
     fun addAchievement(@PathVariable gameId: Long, @RequestBody achievementInsertDto: AchievementInsertDto) =
