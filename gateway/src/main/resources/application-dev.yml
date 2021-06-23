@@ -9,14 +9,14 @@ spring:
           predicates:
             - Path=/user/**
           filters:
-            - RewritePath=/user(?<path>/?.*), $\{path}
+            - StripPrefix=1
             - CircuitBreaker=users
         - id: games
           uri: http://localhost:8022
           predicates:
             - Path=/game/**
           filters:
-            - RewritePath=/game(?<path>/?.*), $\{path}
+            - StripPrefix=1
             - CircuitBreaker=games
         - id: search
           uri: http://localhost:8100
